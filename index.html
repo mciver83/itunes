@@ -13,12 +13,14 @@
           <div class="navbar-header">
             <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-music"></span> DevTunes</a>
           </div>
-          <form class="navbar-form navbar-left" role="search">
+          <form class="navbar-form navbar-left" role="search" ng-submit="getSongData(artist, searchOption)">
             <div class="form-group">
-              <input type="text" class="form-control" ng-model="artist" placeholder="Artist Name" >
-              <button class="btn btn-primary" ng-click="getSongData()"> Submit </button>
+              <input type="text" class="form-control" ng-model="artist" placeholder="Artist Name"/>
+              <select class="form-control" ng-model="searchOption" ng-options="option.value as option.name for option in searchOptions" ng-change="getSongData(artist, searchOption)">
+            </select>
             </div>
           </form>
+          <input type="text" ng-model="filterOptions.filterText"/>
         </div>
       </div>
     </div>

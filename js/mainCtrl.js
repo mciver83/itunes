@@ -15,21 +15,59 @@ app.controller('mainCtrl', function($scope, itunesService){
         {field: 'AlbumArt', displayName: 'Album Art', width: '110px', cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><img src="{{row.getProperty(col.field)}}"></div>'},
         {field: 'Type', displayName: 'Type'},
         {field: 'CollectionPrice', displayName: 'Collection Price'},
-      ]
+      ],
+      filterOptions: $scope.filterOptions
   };
 
+  $scope.filterOptions = {
+    filterText: ''
+  };
+
+  $scope.searchOption = 'all';
   //Our controller is what's going to connect our 'heavy lifting' itunesService with our view (index.html) so our user can see the results they get back from itunes.
 
   //First inject itunesService into your controller.
+  $scope.searchOptions = [
+    {
+      name:'all',
+      value: 'all' 
+    },
+    {
+      name: 'music video',
+      value: 'musicVideo'
+    },
+    {
+      name: 'movie',
+      value: 'movie'
+    },
+    {
+      name: 'music',
+      value: 'music'
+    },
+    {
+      name: 'podcast',
+      value: 'podcast'
+    },
+    {
+      name: 'TV Show',
+      value: 'tvShow'
+    }
+  ];
+    
 
-    //code here
+
 
 
   //Now write a function that will call the method on the itunesService that is responsible for getting the data from iTunes, whenever the user clicks the submit button
   //*remember, that method should be expecting an artist name. The artist name is coming from the input box on index.html, head over there and check if that input box is tied to any specific model we could use.
   //Also note that that method should be retuning a promise, so you could use .then in this function.
     
-    //Code here
+    $scope.getSongData = function(artistName, searchOptions){
+      itunesService.getArtist(artistName, searchOptions).then(function(response){
+
+        $scope.songData = response;
+      });
+    }
 
 
   //Check that the above method is working by entering a name into the input field on your web app, and then console.log the result
